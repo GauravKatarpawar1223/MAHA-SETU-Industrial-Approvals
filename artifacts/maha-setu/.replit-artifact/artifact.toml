@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "MAHA-SETU"
+description = "A Maharashtra-focused prototype for simplifying industrial approvals, compliance workflows, application tracking, and government support discovery for entrepreneurs."
+version = "1.0.0"
+id = "artifacts/maha-setu"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21766
+
+[services.development]
+run = "pnpm --filter @workspace/maha-setu run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/maha-setu", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/maha-setu/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21766"
+BASE_PATH = "/"
